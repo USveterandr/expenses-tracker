@@ -1,6 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { type CookieOptions } from '@supabase/ssr';
-import { getEnvVar } from '@/lib/utils/env';
+import { getEnvVarSafe } from '@/lib/utils/env';
 
 export async function createClient(request?: Request) {
   // For Edge Runtime, we need to handle cookies differently
@@ -15,8 +15,12 @@ export async function createClient(request?: Request) {
     }
   });
 
-  const url = getEnvVar('NEXT_PUBLIC_SUPABASE_URL');
-  const key = getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  const url = getEnvVarSafe('NEXT_PUBLIC_SUPABASE_URL');
+  const key = getEnvVarSafe('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+
+  if (!url || !key) {
+    throw new Error('Missing Supabase environment variables');
+  }
 
   return createServerClient(
     url,

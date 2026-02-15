@@ -1,25 +1,15 @@
-// Environment variable helper that works in both Node.js and Cloudflare Edge Runtime
+// Environment variable helper for Cloudflare Edge Runtime
 export function getEnvVar(name: string): string {
-  // Try process.env first (works in Node.js build time)
-  if (typeof process !== 'undefined' && process.env && process.env[name]) {
-    return process.env[name] as string;
+  // In Cloudflare Pages/Workers, env vars are available via process.env at runtime
+  const value = (globalThis as any).process?.env?.[name] || 
+                (typeof process !== 'undefined' ? process.env?.[name] : undefined);
+  
+  if (!value) {
+    console.error(`[ENV ERROR] ${name} is not defined`);
+    throw new Error(`Environment variable ${name} is not defined`);
   }
   
-  // For Cloudflare Workers/Edge Runtime, variables are injected as globals
-  // @ts-ignore - Cloudflare specific
-  if (typeof globalThis !== 'undefined' && globalThis[name]) {
-    // @ts-ignore
-    return globalThis[name] as string;
-  }
-  
-  // Try import.meta.env (Vite/Next.js specific)
-  // @ts-ignore
-  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env[name]) {
-    // @ts-ignore
-    return import.meta.env[name] as string;
-  }
-  
-  throw new Error(`Environment variable ${name} is not defined`);
+  return value;
 }
 
 // Safe getter that returns undefined instead of throwing
