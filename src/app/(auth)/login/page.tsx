@@ -24,9 +24,28 @@ export default function LoginPage() {
 
     try {
       await login(email, password);
-      router.push('/inbox');
-    } catch {
-      setError('Invalid email or password');
+      router.push('/expenses');
+    } catch (err: unknown) {
+      console.error('Login error:', err);
+      
+      // Show specific error messages
+      if (err instanceof Error) {
+        const errorMessage = err.message.toLowerCase();
+        
+        if (errorMessage.includes('invalid login credentials')) {
+          setError('Invalid email or password. Please check your credentials or sign up if you don\'t have an account.');
+        } else if (errorMessage.includes('email not confirmed')) {
+          setError('Please confirm your email address before logging in. Check your inbox for the confirmation link.');
+        } else if (errorMessage.includes('user not found')) {
+          setError('No account found with this email. Please sign up first.');
+        } else if (errorMessage.includes('too many requests')) {
+          setError('Too many login attempts. Please try again later.');
+        } else {
+          setError(err.message || 'An error occurred during login. Please try again.');
+        }
+      } else {
+        setError('An unexpected error occurred. Please try again.');
+      }
     }
   };
 
