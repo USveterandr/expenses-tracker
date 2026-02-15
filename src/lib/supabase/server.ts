@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr';
 import { type CookieOptions } from '@supabase/ssr';
+import { getEnvVar } from '@/lib/utils/env';
 
 export async function createClient(request?: Request) {
   // For Edge Runtime, we need to handle cookies differently
@@ -14,9 +15,12 @@ export async function createClient(request?: Request) {
     }
   });
 
+  const url = getEnvVar('NEXT_PUBLIC_SUPABASE_URL');
+  const key = getEnvVar('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+
   return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    url,
+    key,
     {
       cookies: {
         getAll() {
