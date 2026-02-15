@@ -1,0 +1,109 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.card {
+  width: 100%;
+  max-width: 500px;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.error {
+  background: #fef2f2;
+  border: 1px solid #ef4444;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.content {
+  padding: 1rem 0;
+}
+
+.appInfo {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.appInfo h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.appInfo p {
+  color: #6b7280;
+}
+
+.scopes {
+  background: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.scopes h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 1rem;
+}
+
+.scopes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.scope {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #e5e7eb;
+  color: #4b5563;
+}
+
+.scope:last-child {
+  border-bottom: none;
+}
+
+.userInfo {
+  text-align: center;
+  padding: 1rem;
+  background: #eff6ff;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.userInfo p {
+  color: #1e40af;
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.denyButton {
+  flex: 1;
+}
+
+.authorizeButton {
+  flex: 1;
+}
+
+.homeButton {
+  width: 100%;
+  margin-top: 1rem;
+}
