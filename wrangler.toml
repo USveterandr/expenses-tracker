@@ -1,0 +1,12 @@
+name = "expenses-tracker"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+NEXT_PUBLIC_APP_URL = "https://expenses-tracker-a6g.pages.dev"
+
+# Build configuration is managed in Cloudflare Pages Dashboard:
+# Build command: cd expense-flow && npm install && npm run pages:build
+# Build output directory: expense-flow/.vercel/output/static
+# Root directory: / (repo root)
+# Node Version: 20.x

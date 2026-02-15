@@ -1,0 +1,165 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 260px;
+  background-color: var(--bg-primary);
+  border-right: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  z-index: var(--z-fixed);
+}
+
+.header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.logoIcon {
+  font-size: 1.5rem;
+}
+
+.logoText {
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: var(--color-primary-700);
+}
+
+.newButton {
+  padding: var(--space-4);
+}
+
+.newExpenseBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background-color: var(--color-primary-600);
+  color: white;
+  border: none;
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.newExpenseBtn:hover {
+  background-color: var(--color-primary-700);
+}
+
+.nav {
+  flex: 1;
+  padding: 0 var(--space-2);
+  overflow-y: auto;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+  margin-bottom: var(--space-1);
+}
+
+.navItem:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.active {
+  background-color: var(--color-primary-50);
+  color: var(--color-primary-700);
+  font-weight: var(--font-medium);
+}
+
+.workspace {
+  padding: var(--space-4);
+  border-top: 1px solid var(--border-light);
+}
+
+.workspaceButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  background: none;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: border-color var(--transition-fast);
+}
+
+.workspaceButton:hover {
+  border-color: var(--border-medium);
+}
+
+.workspaceIcon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-primary-600);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+}
+
+.workspaceInfo {
+  flex: 1;
+  text-align: left;
+}
+
+.workspaceName {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+.workspacePlan {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.footer {
+  padding: var(--space-4);
+  border-top: 1px solid var(--border-light);
+}
+
+.logoutButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+}
+
+.logoutButton:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}

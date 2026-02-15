@@ -1,0 +1,21 @@
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.checkbox input {
+  margin-top: 2px;
+}
+
+.checkbox a {
+  color: var(--color-primary-600);
+  text-decoration: none;
+}
+
+.checkbox a:hover {
+  text-decoration: underline;
+}
