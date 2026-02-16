@@ -31,8 +31,10 @@
     "node": ">=20.0.0"
   },
   "overrides": {
-    "glob": "^10.3.10",
-    "rimraf": "^5.0.5"
+    "glob": "^11.0.0",
+    "rimraf": "^6.0.0",
+    "node-domexception": "^2.0.0",
+    "@supabase/auth-helpers-nextjs": "^0.10.0"
   },
   "devDependencies": {
     "@opennextjs/cloudflare": "^1.16.4",
