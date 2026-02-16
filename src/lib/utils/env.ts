@@ -1,7 +1,14 @@
+interface GlobalThisWithProcess {
+  process?: {
+    env?: Record<string, string | undefined>;
+  };
+}
+
 // Environment variable helper for Cloudflare Edge Runtime
 export function getEnvVar(name: string): string {
   // In Cloudflare Pages/Workers, env vars are available via process.env at runtime
-  const value = (globalThis as any).process?.env?.[name] || 
+  const globalWithProcess = globalThis as GlobalThisWithProcess;
+  const value = globalWithProcess.process?.env?.[name] || 
                 (typeof process !== 'undefined' ? process.env?.[name] : undefined);
   
   if (!value) {

@@ -2,6 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export const runtime = 'edge';
 
+declare global {
+  interface GlobalThisWithProcess {
+    process?: {
+      env?: Record<string, string | undefined>;
+    };
+  }
+}
+
 // Brevo API endpoint for sending transactional emails
 const BREVO_API_URL = 'https://api.brevo.com/v3/smtp/email';
 
@@ -18,7 +26,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Get Brevo API key from environment
-    const brevoApiKey = (globalThis as any).process?.env?.BREVO_API_KEY || 
+    const globalWithProcess = globalThis as GlobalThisWithProcess;
+    const brevoApiKey = globalWithProcess.process?.env?.BREVO_API_KEY || 
                         (typeof process !== 'undefined' ? process.env?.BREVO_API_KEY : undefined);
 
     if (!brevoApiKey) {
