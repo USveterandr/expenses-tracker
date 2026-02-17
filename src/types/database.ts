@@ -842,6 +842,196 @@ export interface Database {
           created_at?: string;
         };
       };
+      oauth_apps: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          client_id: string;
+          client_secret: string;
+          redirect_uris: string[];
+          scopes: string[];
+          owner_id: string;
+          website_url: string | null;
+          logo_url: string | null;
+          privacy_policy_url: string | null;
+          terms_of_service_url: string | null;
+          is_active: boolean;
+          is_verified: boolean;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          description?: string | null;
+          client_id: string;
+          client_secret: string;
+          redirect_uris: string[];
+          scopes?: string[];
+          owner_id: string;
+          website_url?: string | null;
+          logo_url?: string | null;
+          privacy_policy_url?: string | null;
+          terms_of_service_url?: string | null;
+          is_active?: boolean;
+          is_verified?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          client_id?: string;
+          client_secret?: string;
+          redirect_uris?: string[];
+          scopes?: string[];
+          owner_id?: string;
+          website_url?: string | null;
+          logo_url?: string | null;
+          privacy_policy_url?: string | null;
+          terms_of_service_url?: string | null;
+          is_active?: boolean;
+          is_verified?: boolean;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      oauth_authorization_codes: {
+        Row: {
+          id: string;
+          code: string;
+          client_id: string;
+          user_id: string;
+          redirect_uri: string;
+          scopes: string[];
+          code_challenge: string | null;
+          code_challenge_method: string | null;
+          expires_at: string;
+          used_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          code: string;
+          client_id: string;
+          user_id: string;
+          redirect_uri: string;
+          scopes: string[];
+          code_challenge?: string | null;
+          code_challenge_method?: string | null;
+          expires_at: string;
+          used_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          code?: string;
+          client_id?: string;
+          user_id?: string;
+          redirect_uri?: string;
+          scopes?: string[];
+          code_challenge?: string | null;
+          code_challenge_method?: string | null;
+          expires_at?: string;
+          used_at?: string | null;
+          created_at?: string;
+        };
+      };
+      oauth_access_tokens: {
+        Row: {
+          id: string;
+          token: string;
+          client_id: string;
+          user_id: string;
+          scopes: string[];
+          expires_at: string;
+          revoked_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          token: string;
+          client_id: string;
+          user_id: string;
+          scopes: string[];
+          expires_at: string;
+          revoked_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          token?: string;
+          client_id?: string;
+          user_id?: string;
+          scopes?: string[];
+          expires_at?: string;
+          revoked_at?: string | null;
+          created_at?: string;
+        };
+      };
+      oauth_refresh_tokens: {
+        Row: {
+          id: string;
+          token: string;
+          access_token_id: string | null;
+          client_id: string;
+          user_id: string;
+          scopes: string[];
+          expires_at: string;
+          revoked_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          token: string;
+          access_token_id?: string | null;
+          client_id: string;
+          user_id: string;
+          scopes: string[];
+          expires_at: string;
+          revoked_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          token?: string;
+          access_token_id?: string | null;
+          client_id?: string;
+          user_id?: string;
+          scopes?: string[];
+          expires_at?: string;
+          revoked_at?: string | null;
+          created_at?: string;
+        };
+      };
+      oauth_grants: {
+        Row: {
+          id: string;
+          client_id: string;
+          user_id: string;
+          scopes: string[];
+          last_used_at: string | null;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          client_id: string;
+          user_id: string;
+          scopes: string[];
+          last_used_at?: string | null;
+          created_at?: string;
+        };
+        Update: {
+          id?: string;
+          client_id?: string;
+          user_id?: string;
+          scopes?: string[];
+          last_used_at?: string | null;
+          created_at?: string;
+        };
+      };
     };
     Views: {
       [_ in never]: never;

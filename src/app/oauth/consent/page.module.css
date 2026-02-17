@@ -3,107 +3,244 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: var(--space-6);
+  background: linear-gradient(135deg, var(--color-primary-50) 0%, var(--bg-primary) 100%);
 }
 
 .card {
   width: 100%;
-  max-width: 500px;
+  max-width: 480px;
+  box-shadow: var(--shadow-xl);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--color-primary-600);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .loading {
   text-align: center;
-  padding: 2rem;
-  color: #666;
+  padding: var(--space-8);
+  color: var(--text-secondary);
 }
 
 .error {
-  background: #fef2f2;
-  border: 1px solid #ef4444;
-  color: #dc2626;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--color-error);
+  padding: var(--space-3);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-sm);
+}
+
+.errorTitle {
+  color: var(--color-error);
+  text-align: center;
 }
 
 .content {
-  padding: 1rem 0;
+  padding: var(--space-4) 0;
 }
 
-.appInfo {
+/* Centered Header */
+.centeredHeader {
   text-align: center;
-  margin-bottom: 2rem;
+  padding-bottom: var(--space-4);
 }
 
-.appInfo h2 {
+.appLogo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoImage {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.logoIcon {
+  color: var(--color-primary-600);
+}
+
+.titleLarge {
   font-size: 1.5rem;
-  font-weight: 600;
-  color: #111827;
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
-.appInfo p {
-  color: #6b7280;
-}
-
-.scopes {
-  background: #f9fafb;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-.scopes h3 {
+.subtitle {
+  color: var(--text-secondary);
+  margin-top: var(--space-2);
   font-size: 0.875rem;
-  font-weight: 600;
-  color: #374151;
-  margin-bottom: 1rem;
 }
 
-.scopes ul {
+/* App Info Box */
+.appInfoBox {
+  background-color: var(--bg-secondary);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
+}
+
+.appHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.appName {
+  margin: 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.verifiedBadge {
+  background-color: var(--color-success);
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.appDescription {
+  margin: 0 0 var(--space-3) 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.websiteLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-primary-600);
+  font-size: 0.875rem;
+  text-decoration: none;
+}
+
+.websiteLink:hover {
+  text-decoration: underline;
+}
+
+/* Scopes */
+.scopes {
+  margin-bottom: var(--space-6);
+}
+
+.scopesTitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-3);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.scopesList {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.scope {
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #e5e7eb;
-  color: #4b5563;
+.scopeItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background-color: rgba(79, 70, 229, 0.03);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-2);
 }
 
-.scope:last-child {
-  border-bottom: none;
+.checkmark {
+  color: var(--color-success);
+  font-weight: bold;
 }
 
+.scopeText {
+  font-size: 0.875rem;
+}
+
+/* User Info */
 .userInfo {
-  text-align: center;
-  padding: 1rem;
-  background: #eff6ff;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-6);
 }
 
-.userInfo p {
-  color: #1e40af;
+.userAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+}
+
+.userLabel {
   margin: 0;
+  font-weight: 500;
 }
 
+.userEmail {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+/* Actions */
 .actions {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.denyButton {
-  flex: 1;
+.fullWidth {
+  width: 100%;
+  justify-content: center;
 }
 
 .authorizeButton {
-  flex: 1;
+  background: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-primary-700) 100%);
+}
+
+.denyButton {
+  border-color: var(--border-medium);
 }
 
 .homeButton {
   width: 100%;
-  margin-top: 1rem;
+  margin-top: var(--space-4);
+}
+
+.footerNote {
+  margin-top: var(--space-4);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
 }

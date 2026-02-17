@@ -2,21 +2,30 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Shield, Globe, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { useAuthStore } from '@/lib/stores/authStore';
 import styles from './page.module.css';
+
+interface OAuthClient {
+  id: string;
+  name: string;
+  description: string | null;
+  client_id: string;
+  redirect_uris: string[];
+  scopes: string[];
+  logo_url: string | null;
+  website_url: string | null;
+  is_verified: boolean;
+}
 
 function OAuthConsentContent() {
   const searchParams = useSearchParams();
   const { user } = useAuthStore();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [clientInfo, setClientInfo] = useState<{
-    name: string;
-    scopes: string[];
-    redirect_uri: string;
-  } | null>(null);
+  const [clientInfo, setClientInfo] = useState<OAuthClient | null>(null);
 
   const clientId = searchParams.get('client_id');
   const redirectUri = searchParams.get('redirect_uri');
@@ -38,22 +47,24 @@ function OAuthConsentContent() {
       return;
     }
 
-    // Fetch client information (you'll need to implement this API endpoint)
+    // Fetch client information from API
     fetchClientInfo(clientId);
   }, [clientId, redirectUri, responseType]);
 
   const fetchClientInfo = async (clientId: string) => {
     try {
-      // This would be an API call to get OAuth app details
-      // For now, we'll simulate it
-      setClientInfo({
-        name: 'Third-Party Application',
-        scopes: scope ? scope.split(' ') : ['read'],
-        redirect_uri: redirectUri || '',
-      });
+      const response = await fetch(`/api/oauth/clients?client_id=${encodeURIComponent(clientId)}`);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to load client information');
+      }
+
+      setClientInfo(data.client);
       setLoading(false);
     } catch (err) {
-      setError('Failed to load application information');
+      console.error('Failed to fetch client info:', err);
+      setError(err instanceof Error ? err.message : 'Failed to load application information');
       setLoading(false);
     }
   };
@@ -61,7 +72,7 @@ function OAuthConsentContent() {
   const handleAuthorize = async () => {
     setLoading(true);
     try {
-      // Call your OAuth authorization API
+      // Call OAuth authorization API
       const response = await fetch('/api/oauth/authorize', {
         method: 'POST',
         headers: {
@@ -70,7 +81,7 @@ function OAuthConsentContent() {
         body: JSON.stringify({
           client_id: clientId,
           redirect_uri: redirectUri,
-          scope,
+          scope: scope || clientInfo?.scopes?.join(' '),
           state,
           response_type: responseType,
         }),
@@ -79,7 +90,7 @@ function OAuthConsentContent() {
       const data = await response.json();
 
       if (data.error) {
-        throw new Error(data.error);
+        throw new Error(data.error_description || data.error);
       }
 
       // Redirect back to the client application
@@ -107,13 +118,28 @@ function OAuthConsentContent() {
     window.location.href = redirectUrl.toString();
   };
 
+  const getScopeDescription = (scope: string): string => {
+    const descriptions: Record<string, string> = {
+      'read': 'Read your expenses and reports',
+      'write': 'Create and modify expenses',
+      'profile': 'Access your profile information',
+      'email': 'Access your email address',
+      'workspace': 'Access your workspace information',
+      'admin': 'Full administrative access to your account',
+    };
+    return descriptions[scope] || `Access: ${scope}`;
+  };
+
   if (loading) {
     return (
       <div className={styles.container}>
         <Card className={styles.card}>
-          <CardContent>
-            <div className={styles.loading}>Loading...</div>
-          </CardContent>
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            <div className={styles.spinner} />
+            <p style={{ marginTop: '16px', color: 'var(--text-secondary)' }}>
+              Loading application information...
+            </p>
+          </div>
         </Card>
       </div>
     );
@@ -124,12 +150,17 @@ function OAuthConsentContent() {
       <div className={styles.container}>
         <Card className={styles.card}>
           <CardHeader>
-            <CardTitle>Authorization Error</CardTitle>
+            <CardTitle className={styles.errorTitle}>
+              Authorization Error
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className={styles.error}>{error}</div>
-            <Button onClick={() => window.location.href = '/'} className={styles.homeButton}>
-              Go Home
+            <Button 
+              onClick={() => window.location.href = '/login'} 
+              className={styles.homeButton}
+            >
+              Go to Login
             </Button>
           </CardContent>
         </Card>
@@ -137,54 +168,115 @@ function OAuthConsentContent() {
     );
   }
 
+  const requestedScopes = scope ? scope.split(' ') : (clientInfo?.scopes || ['read']);
+
   return (
     <div className={styles.container}>
       <Card className={styles.card}>
-        <CardHeader>
-          <CardTitle>Authorize Application</CardTitle>
+        <CardHeader className={styles.centeredHeader}>
+          <div className={styles.appLogo}>
+            {clientInfo?.logo_url ? (
+              <img 
+                src={clientInfo.logo_url} 
+                alt={clientInfo.name}
+                className={styles.logoImage}
+              />
+            ) : (
+              <Shield size={32} className={styles.logoIcon} />
+            )}
+          </div>
+          <CardTitle className={styles.titleLarge}>
+            Authorize {clientInfo?.name}
+          </CardTitle>
+          <p className={styles.subtitle}>
+            This application is requesting access to your ExpenseFlow account
+          </p>
         </CardHeader>
         <CardContent>
           <div className={styles.content}>
-            <div className={styles.appInfo}>
-              <h2>{clientInfo?.name}</h2>
-              <p>wants to access your ExpenseFlow account</p>
+            {/* App Info */}
+            <div className={styles.appInfoBox}>
+              <div className={styles.appHeader}>
+                <h3 className={styles.appName}>{clientInfo?.name}</h3>
+                {clientInfo?.is_verified && (
+                  <span className={styles.verifiedBadge}>
+                    Verified
+                  </span>
+                )}
+              </div>
+              {clientInfo?.description && (
+                <p className={styles.appDescription}>
+                  {clientInfo.description}
+                </p>
+              )}
+              {clientInfo?.website_url && (
+                <a 
+                  href={clientInfo.website_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.websiteLink}
+                >
+                  <Globe size={14} />
+                  Website
+                  <ExternalLink size={12} />
+                </a>
+              )}
             </div>
 
+            {/* Permissions */}
             <div className={styles.scopes}>
-              <h3>This application will be able to:</h3>
-              <ul>
-                {clientInfo?.scopes.map((scope) => (
-                  <li key={scope} className={styles.scope}>
-                    {scope === 'read' && '✓ Read your expenses and reports'}
-                    {scope === 'write' && '✓ Create and modify expenses'}
-                    {scope === 'profile' && '✓ Access your profile information'}
-                    {scope === 'email' && '✓ Access your email address'}
-                    {!['read', 'write', 'profile', 'email'].includes(scope) && `✓ ${scope}`}
+              <h4 className={styles.scopesTitle}>
+                This app will be able to:
+              </h4>
+              <ul className={styles.scopesList}>
+                {requestedScopes.map((scope) => (
+                  <li 
+                    key={scope} 
+                    className={styles.scopeItem}
+                  >
+                    <span className={styles.checkmark}>✓</span>
+                    <span className={styles.scopeText}>
+                      {getScopeDescription(scope)}
+                    </span>
                   </li>
                 ))}
               </ul>
             </div>
 
+            {/* User Info */}
             <div className={styles.userInfo}>
-              <p>Signed in as: <strong>{user?.email || 'Guest'}</strong></p>
+              <div className={styles.userAvatar}>
+                {user?.email?.charAt(0).toUpperCase() || '?'}
+              </div>
+              <div>
+                <p className={styles.userLabel}>Signed in as</p>
+                <p className={styles.userEmail}>
+                  {user?.email || 'Guest'}
+                </p>
+              </div>
             </div>
 
+            {/* Actions */}
             <div className={styles.actions}>
-              <Button 
-                variant="outline" 
-                onClick={handleDeny}
-                className={styles.denyButton}
-              >
-                Deny
-              </Button>
               <Button 
                 onClick={handleAuthorize}
                 loading={loading}
-                className={styles.authorizeButton}
+                className={`${styles.authorizeButton} ${styles.fullWidth}`}
               >
-                Authorize
+                Authorize Application
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={handleDeny}
+                className={`${styles.denyButton} ${styles.fullWidth}`}
+              >
+                Deny Access
               </Button>
             </div>
+
+            <p className={styles.footerNote}>
+              You can revoke this access at any time in your account settings
+            </p>
           </div>
         </CardContent>
       </Card>
@@ -197,9 +289,12 @@ export default function OAuthConsentPage() {
     <Suspense fallback={
       <div className={styles.container}>
         <Card className={styles.card}>
-          <CardContent>
-            <div className={styles.loading}>Loading...</div>
-          </CardContent>
+          <div style={{ textAlign: 'center', padding: '40px' }}>
+            <div className={styles.spinner} />
+            <p style={{ marginTop: '16px', color: 'var(--text-secondary)' }}>
+              Loading...
+            </p>
+          </div>
         </Card>
       </div>
     }>
