@@ -146,22 +146,90 @@ function OAuthConsentContent() {
   }
 
   if (error) {
+    // Check if this is a missing parameters error - show helpful info instead
+    const isMissingParams = error.includes('Missing required parameters');
+    
     return (
       <div className={styles.container}>
         <Card className={styles.card}>
-          <CardHeader>
-            <CardTitle className={styles.errorTitle}>
-              Authorization Error
+          <CardHeader className={styles.centeredHeader}>
+            <div className={styles.appLogo}>
+              <Shield size={32} className={styles.logoIcon} />
+            </div>
+            <CardTitle className={styles.titleLarge}>
+              {isMissingParams ? 'OAuth Authorization Server' : 'Authorization Error'}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className={styles.error}>{error}</div>
-            <Button 
-              onClick={() => window.location.href = '/login'} 
-              className={styles.homeButton}
-            >
-              Go to Login
-            </Button>
+            {isMissingParams ? (
+              <div className={styles.content}>
+                <div className={styles.appInfoBox}>
+                  <h3 className={styles.appName}>What is this page?</h3>
+                  <p className={styles.appDescription}>
+                    This is the OAuth 2.0 consent screen for ExpenseFlow. Third-party applications 
+                    use this page to request permission to access user data.
+                  </p>
+                </div>
+                
+                <div className={styles.scopes}>
+                  <h4 className={styles.scopesTitle}>How it works:</h4>
+                  <ol className={styles.infoList}>
+                    <li className={styles.infoItem}>
+                      <strong>Register your app</strong> - Developers register their application 
+                      to get a client_id and client_secret
+                    </li>
+                    <li className={styles.infoItem}>
+                      <strong>Redirect users here</strong> - Send users to this page with their 
+                      client_id and requested permissions
+                    </li>
+                    <li className={styles.infoItem}>
+                      <strong>User approves</strong> - Users review and authorize the requested access
+                    </li>
+                    <li className={styles.infoItem}>
+                      <strong>Get access token</strong> - Exchange the authorization code for an 
+                      access token to call the API
+                    </li>
+                  </ol>
+                </div>
+
+                <div className={styles.appInfoBox} style={{ backgroundColor: 'rgba(79, 70, 229, 0.05)' }}>
+                  <h4 className={styles.scopesTitle}>Example Authorization URL:</h4>
+                  <code className={styles.codeBlock}>
+                    https://expensetracker-seven-coral.vercel.app/oauth/consent
+                    ?client_id=YOUR_CLIENT_ID
+                    &redirect_uri=YOUR_CALLBACK_URL
+                    &response_type=code
+                    &scope=read
+                  </code>
+                </div>
+
+                <div className={styles.actions}>
+                  <Button 
+                    onClick={() => window.location.href = '/login'} 
+                    className={`${styles.authorizeButton} ${styles.fullWidth}`}
+                  >
+                    Go to Login
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    onClick={() => window.location.href = '/signup'}
+                    className={`${styles.denyButton} ${styles.fullWidth}`}
+                  >
+                    Create Account
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className={styles.error}>{error}</div>
+                <Button 
+                  onClick={() => window.location.href = '/login'} 
+                  className={styles.homeButton}
+                >
+                  Go to Login
+                </Button>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>

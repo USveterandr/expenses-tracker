@@ -244,3 +244,59 @@
   font-size: 0.75rem;
   color: var(--text-tertiary);
 }
+
+/* Info List for OAuth explanation */
+.infoList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: info-counter;
+}
+
+.infoItem {
+  position: relative;
+  padding-left: 40px;
+  margin-bottom: var(--space-4);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.infoItem::before {
+  counter-increment: info-counter;
+  content: counter(info-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-primary-100);
+  color: var(--color-primary-700);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.infoItem strong {
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Code Block */
+.codeBlock {
+  display: block;
+  background-color: #1a1a2e;
+  color: #e0e0e0;
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  font-family: 'Monaco', 'Menlo', 'Consolas', monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  word-break: break-all;
+  white-space: pre-wrap;
+  margin-top: var(--space-3);
+}
