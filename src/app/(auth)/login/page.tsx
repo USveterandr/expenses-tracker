@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, ReactNode } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff, Sparkles, CheckCircle, KeyRound } from 'lucide-react';
@@ -19,7 +19,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState<ReactNode>('');
   const [successMessage, setSuccessMessage] = useState('');
 
   const handlePasswordLogin = async (e: React.FormEvent) => {
@@ -34,15 +34,52 @@ export default function LoginPage() {
       console.error('Login error:', err);
       
       if (err instanceof Error) {
-        const errorMessage = err.message.toLowerCase();
+        const errorMessage = err.message;
+        console.log('Error message:', errorMessage);
         
-        if (errorMessage.includes('invalid login credentials')) {
-          setError('Invalid email or password. Please check your credentials or sign up if you don\'t have an account.');
-        } else if (errorMessage.includes('email not confirmed')) {
+        // Supabase returns "Invalid login credentials" for both wrong password AND non-existent user
+        if (errorMessage.toLowerCase().includes('invalid login credentials')) {
+          setError(
+            <div>
+              <div style={{ marginBottom: '12px' }}>
+                <strong>Account not found or password incorrect</strong>
+              </div>
+              <div style={{ fontSize: '0.875rem', marginBottom: '8px' }}>
+                This could mean:
+              </div>
+              <ul style={{ fontSize: '0.875rem', margin: '0 0 12px 20px', padding: 0 }}>
+                <li>You haven't created an account yet</li>
+                <li>The password you entered is incorrect</li>
+                <li>There might be a typo in your email</li>
+              </ul>
+              <div style={{ fontSize: '0.875rem' }}>
+                <Link href="/signup" style={{ color: 'var(--color-primary-600)', textDecoration: 'underline', fontWeight: 600 }}>
+                  Create a new account
+                </Link>
+                {' '}or{' '}
+                <Link href="/forgot-password" style={{ color: 'var(--color-primary-600)', textDecoration: 'underline' }}>
+                  reset your password
+                </Link>
+              </div>
+            </div>
+          );
+        } else if (errorMessage.toLowerCase().includes('email not confirmed')) {
           setError('Please confirm your email address before logging in. Check your inbox for the confirmation link.');
-        } else if (errorMessage.includes('user not found')) {
-          setError('No account found with this email. Please sign up first.');
-        } else if (errorMessage.includes('too many requests')) {
+        } else if (errorMessage.toLowerCase().includes('user not found') || errorMessage.toLowerCase().includes('not found')) {
+          setError(
+            <div>
+              <div style={{ marginBottom: '12px' }}>
+                <strong>No account found with this email address.</strong>
+              </div>
+              <div style={{ fontSize: '0.875rem' }}>
+                <Link href="/signup" style={{ color: 'var(--color-primary-600)', textDecoration: 'underline', fontWeight: 600 }}>
+                  Create an account
+                </Link>{' '}
+                to get started with ExpenseFlow.
+              </div>
+            </div>
+          );
+        } else if (errorMessage.toLowerCase().includes('too many requests')) {
           setError('Too many login attempts. Please try again later.');
         } else {
           setError(err.message || 'An error occurred during login. Please try again.');
