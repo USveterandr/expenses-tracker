@@ -201,7 +201,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
 
       set({ isLoading: false });
-      return { requiresEmailConfirmation: !requiresEmailConfirmation };
+      return { requiresEmailConfirmation };
     } catch (error) {
       set({ isLoading: false });
       throw error;

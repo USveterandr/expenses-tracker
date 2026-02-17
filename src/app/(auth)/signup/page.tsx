@@ -57,6 +57,8 @@ export default function SignupPage() {
         errorMessage = err.message;
       } else if (typeof err === 'object' && err !== null && 'error_description' in err) {
         errorMessage = String((err as { error_description: string }).error_description);
+      } else if (typeof err === 'object' && err !== null && 'message' in err) {
+        errorMessage = String((err as { message: string }).message);
       } else {
         errorMessage = 'Failed to create account. Please try again.';
       }
@@ -67,6 +69,8 @@ export default function SignupPage() {
         errorMessage = 'An account with this email already exists. Please sign in instead.';
       } else if (errorMessage.includes('weak password')) {
         errorMessage = 'Password is too weak. Please use at least 8 characters with numbers and symbols.';
+      } else if (errorMessage.toLowerCase().includes('email') && errorMessage.toLowerCase().includes('send')) {
+        errorMessage = 'Unable to send confirmation email. Please try again or contact support if the problem persists.';
       }
       
       setError(errorMessage);
