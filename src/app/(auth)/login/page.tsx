@@ -240,9 +240,13 @@ export default function LoginPage() {
                 </button>
               </div>
 
-              <div className={styles.forgotPassword}>
-                <Link href="/forgot-password">Forgot password?</Link>
-              </div>
+            <div className={styles.forgotPassword}>
+              <Link href="/forgot-password">Forgot password?</Link>
+            </div>
+            
+            <div className={styles.forgotPassword} style={{ marginTop: '8px' }}>
+              <Link href="/resend-confirmation">Didn't receive confirmation email?</Link>
+            </div>
 
               <Button type="submit" loading={isLoading} className={styles.submitButton}>
                 Sign In

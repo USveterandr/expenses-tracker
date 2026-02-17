@@ -130,6 +130,23 @@ export default function SignupPage() {
                 Once confirmed, you can sign in to ExpenseFlow.
               </p>
               
+              <div style={{ 
+                backgroundColor: 'rgba(245, 158, 11, 0.1)', 
+                border: '1px solid rgba(245, 158, 11, 0.3)',
+                borderRadius: '8px',
+                padding: '16px',
+                marginBottom: 'var(--space-4)'
+              }}>
+                <p style={{ margin: '0 0 12px 0', color: 'var(--text-primary)', fontWeight: 600 }}>
+                  Didn't receive the email?
+                </p>
+                <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
+                  <li style={{ marginBottom: '8px' }}>Check your spam/junk folder</li>
+                  <li style={{ marginBottom: '8px' }}>Wait 2-3 minutes for delivery</li>
+                  <li>Make sure you entered the correct email address</li>
+                </ul>
+              </div>
+
               <div style={{ display: 'flex', gap: 'var(--space-3)', flexDirection: 'column' }}>
                 <Button 
                   onClick={handleResendEmail} 
