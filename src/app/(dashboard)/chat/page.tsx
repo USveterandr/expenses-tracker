@@ -99,7 +99,7 @@ export default function ChatPage() {
     }
   }, [user, fetchChats]);
 
-  const loadMessages = useCallback(async (chatId: string) => {
+  const loadMessages = useCallback(async (_chatId: string) => {
 
 
     // Mock messages for now

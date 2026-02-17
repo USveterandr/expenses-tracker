@@ -278,7 +278,11 @@ export default function InvoicesPage() {
               <div className={styles.colActions}></div>
             </div>
 
-            {filteredInvoices.length > 0 ? (
+            {isLoading ? (
+              <div className={styles.emptyState}>
+                <div className={styles.loadingSpinner}>Loading...</div>
+              </div>
+            ) : filteredInvoices.length > 0 ? (
               filteredInvoices.map((invoice) => (
                 <div key={invoice.id} className={styles.tableRow}>
                   <div className={styles.colInvoice}>

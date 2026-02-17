@@ -41,7 +41,7 @@ export default function ResendConfirmationPage() {
             <CheckCircle size={64} className={styles.successIcon} />
             <h2 className={styles.successTitle}>Confirmation email sent!</h2>
             <p className={styles.successText}>
-              We've sent a new confirmation link to {email}
+              We&apos;ve sent a new confirmation link to {email}
             </p>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '24px' }}>
               Please check your inbox and spam folder. The email should arrive within a few minutes.
@@ -76,7 +76,7 @@ export default function ResendConfirmationPage() {
               marginBottom: '20px'
             }}>
               <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px', lineHeight: '1.5' }}>
-                Enter your email address and we'll send you a new confirmation link.
+                Enter your email address and we&apos;ll send you a new confirmation link.
               </p>
             </div>
 
@@ -99,7 +99,7 @@ export default function ResendConfirmationPage() {
 
             <div style={{ marginTop: '20px' }}>
               <h4 style={{ fontSize: '0.875rem', fontWeight: 600, marginBottom: '12px' }}>
-                Didn't receive the email?
+                Didn&apos;t receive the email?
               </h4>
               <ul style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, paddingLeft: '20px' }}>
                 <li style={{ marginBottom: '8px' }}>Check your spam/junk folder</li>

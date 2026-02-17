@@ -33,7 +33,7 @@ export async function createClient(request?: Request) {
             value,
           }));
         },
-        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
+        setAll(_cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           // In Edge Runtime, we can't set cookies this way
           // Cookies should be set via the Response headers in API routes
         },

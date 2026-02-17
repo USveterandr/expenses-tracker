@@ -131,6 +131,8 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isLoading: true });
     
     try {
+      console.log('Starting signup for:', data.email);
+      
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
@@ -140,10 +142,15 @@ export const useAuthStore = create<AuthState>((set) => ({
             last_name: data.lastName,
             display_name: `${data.firstName} ${data.lastName}`,
           },
+          // Ensure email confirmation is sent
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
+      console.log('Signup response:', { authData, authError });
+
       if (authError) {
+        console.error('Signup error:', authError);
         throw authError;
       }
 
@@ -154,6 +161,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       // Check if email confirmation is required
       // If session is null, user needs to confirm email
       const requiresEmailConfirmation = !authData.session;
+      console.log('Email confirmation required:', requiresEmailConfirmation);
 
       if (authData.session) {
         // User is confirmed and logged in automatically

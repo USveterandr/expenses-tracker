@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { generateAuthCode, generateToken, hashToken } from '@/lib/utils/oauth';
+import { generateAuthCode } from '@/lib/utils/oauth';
 
 export const runtime = 'edge';
 

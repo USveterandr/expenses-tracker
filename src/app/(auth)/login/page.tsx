@@ -48,7 +48,7 @@ export default function LoginPage() {
                 This could mean:
               </div>
               <ul style={{ fontSize: '0.875rem', margin: '0 0 12px 20px', padding: 0 }}>
-                <li>You haven't created an account yet</li>
+                <li>You haven&apos;t created an account yet</li>
                 <li>The password you entered is incorrect</li>
                 <li>There might be a typo in your email</li>
               </ul>
@@ -245,7 +245,7 @@ export default function LoginPage() {
             </div>
             
             <div className={styles.forgotPassword} style={{ marginTop: '8px' }}>
-              <Link href="/resend-confirmation">Didn't receive confirmation email?</Link>
+              <Link href="/resend-confirmation">Didn&apos;t receive confirmation email?</Link>
             </div>
 
               <Button type="submit" loading={isLoading} className={styles.submitButton}>
@@ -262,7 +262,7 @@ export default function LoginPage() {
                 marginBottom: '20px'
               }}>
                 <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px', lineHeight: '1.5' }}>
-                  <strong>No password needed!</strong> We'll send a secure login link to your email. 
+                  <strong>No password needed!</strong> We&apos;ll send a secure login link to your email. 
                   Click the link to sign in instantly.
                 </p>
               </div>
@@ -292,7 +292,7 @@ export default function LoginPage() {
                 marginBottom: '20px'
               }}>
                 <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px', lineHeight: '1.5' }}>
-                  <strong>One-Time Password!</strong> We'll send a 6-digit code to your email. 
+                  <strong>One-Time Password!</strong> We&apos;ll send a 6-digit code to your email. 
                   Enter the code to sign in without a password.
                 </p>
               </div>

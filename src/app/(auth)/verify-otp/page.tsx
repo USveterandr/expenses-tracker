@@ -117,7 +117,7 @@ export default function VerifyOtpPage() {
                 marginBottom: '20px'
               }}>
                 <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px', lineHeight: '1.5' }}>
-                  We'll send a 6-digit verification code to your email. Enter the code to sign in.
+                  We&apos;ll send a 6-digit verification code to your email. Enter the code to sign in.
                 </p>
               </div>
 

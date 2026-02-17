@@ -138,7 +138,7 @@ export default function SignupPage() {
                 marginBottom: 'var(--space-4)'
               }}>
                 <p style={{ margin: '0 0 12px 0', color: 'var(--text-primary)', fontWeight: 600 }}>
-                  Didn't receive the email?
+                  Didn&apos;t receive the email?
                 </p>
                 <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
                   <li style={{ marginBottom: '8px' }}>Check your spam/junk folder</li>
