@@ -13,6 +13,8 @@ interface AuthState {
   isLoading: boolean;
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithMagicLink: (email: string) => Promise<void>;
+  verifyOtp: (email: string, token: string) => Promise<void>;
   signup: (data: SignupData) => Promise<SignupResult>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
@@ -234,6 +236,59 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
 
     set({ isLoading: false });
+  },
+
+  loginWithMagicLink: async (email: string) => {
+    set({ isLoading: true });
+    
+    try {
+      const { error } = await supabase.auth.signInWithOtp({
+        email,
+        options: {
+          shouldCreateUser: false,
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      set({ isLoading: false });
+      throw error;
+    }
+
+    set({ isLoading: false });
+  },
+
+  verifyOtp: async (email: string, token: string) => {
+    set({ isLoading: true });
+    
+    try {
+      const { data, error } = await supabase.auth.verifyOtp({
+        email,
+        token,
+        type: 'email',
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data.user) {
+        // Update last login
+        await supabase
+          .from('profiles')
+          .update({ last_login_at: new Date().toISOString() })
+          .eq('id', data.user.id);
+
+        // Fetch full user data
+        await useAuthStore.getState().fetchUser();
+      }
+    } catch (error) {
+      set({ isLoading: false });
+      throw error;
+    }
   },
 
   resendConfirmationEmail: async (email: string) => {
