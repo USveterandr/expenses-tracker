@@ -99,9 +99,8 @@ export default function ChatPage() {
     }
   }, [user, fetchChats]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const loadMessages = useCallback(async (_chatId: string) => {
-
-
     // Mock messages for now
     const mockMessages: Message[] = [
       {
