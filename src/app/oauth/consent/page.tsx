@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import { Shield, Globe, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
@@ -244,9 +245,11 @@ function OAuthConsentContent() {
         <CardHeader className={styles.centeredHeader}>
           <div className={styles.appLogo}>
             {clientInfo?.logo_url ? (
-              <img 
+              <Image 
                 src={clientInfo.logo_url} 
                 alt={clientInfo.name}
+                width={32}
+                height={32}
                 className={styles.logoImage}
               />
             ) : (
